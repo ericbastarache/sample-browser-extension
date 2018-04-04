@@ -1,12 +1,13 @@
 import { createLogic } from 'redux-logic';
-import { cancelLogin } from '../../background/reducers/actions';
+import { SUBMIT_LOGIN, CANCEL_LOGIN, cancelLogin, submitLogin } from '../../background/reducers/login/actions';
 
 const loginLogic = createLogic({
   type: SUBMIT_LOGIN,
+  cancelType: CANCEL_LOGIN,
   debounce: 3000,
   latest: true,
   validate({getState, action}, allow, reject) {
-    if (action.payload && action.payload.username && action.payload.password) {
+    if (action.username && action.password) {
       allow(action);
     } else {
       reject();
@@ -14,11 +15,17 @@ const loginLogic = createLogic({
   },
   process({getState, action}, dispatch, done) {
     axios.get('../../background/sampleData')
-      .then(resp => dispatch(submitLogin(resp.account)))
+      .then(resp => {
+        if(resp.account.username === action.username && resp.account.password === action.password) {
+          dispatch(submitLogin({username: resp.account.username, password: resp.account.password}))
+        } else {
+          dispatch(cancelLogin());
+        }
+      })
       .then(() => dispatch(loadingUser()))
       .catch(err => {
         console.error('Username or password did not match')
-        dispatch(cancelLogin);
+        dispatch(cancelLogin());
       })
       .then(() => done());
   }

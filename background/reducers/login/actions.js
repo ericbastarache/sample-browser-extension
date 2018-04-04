@@ -1,15 +1,21 @@
-import sampleData from '../../sampleData.js';
 export const SUBMIT_LOGIN = 'SUBMIT_LOGIN';
 export const CANCEL_LOGIN = 'CANCEL_LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const UPDATE = 'UPDATE';
 export const LOADING_USER = 'LOADING_USER';
-export const loginKey = 'login';
+export const key = 'login';
 
-export const submitLogin = (data) => {
+export const submitLogin = ({username, password}) => {
   return {
     type: SUBMIT_LOGIN,
-    payload: data
+    username,
+    password
+  }
+}
+
+export const logout = () => {
+  return {
+    type: LOGOUT
   }
 }
 

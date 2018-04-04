@@ -1,12 +1,10 @@
-import sampleData from '../../sampleData.js';
 export const CHANGE_COUNTRY = 'CHANGE_COUNTRY';
 export const FETCH_COUNTRY_DATA = 'FETCH_COUNTRY_DATA';
-export const countryKey = 'countries'
+export const key = 'countries'
 
-export const fetchCountryData = (countryData) => {
+export const fetchCountryData = () => {
   return {
-    type: FETCH_COUNTRY_DATA,
-    payload: countryData
+    type: FETCH_COUNTRY_DATA
   }
 }
 

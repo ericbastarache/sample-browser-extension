@@ -1,63 +1,50 @@
-import { UPDATE, SUBMIT_LOGIN, CANCEL_LOGIN, LOGOUT } from './actions';
+import * as reduxActions from 'redux-actions';
+import { key, UPDATE, SUBMIT_LOGIN, CANCEL_LOGIN, LOGOUT } from './actions';
 
-export const selectors = {
-  fields: state => state[key].fields,
-  errors: state => state[key].errors,
-  message: state => state[key].message
-};
-
-const { createStore } = window.Redux;
+const { createStore } = reduxActions;
 const {
   createActions,
   handleActions,
   handleAction
-} = window.ReduxActions;
+} = reduxActions;
 
 const { submit_login, cancel_login, logout } = createActions(SUBMIT_LOGIN, CANCEL_LOGIN, LOGOUT);
 
+export const selectors = {
+  username: state => state.username ,
+  password: state => state.password,
+  authenticated: state => state.authenticated,
+  loading: state => state.loading
+}
+
 const INITIAL_STATE = {
   authenticated: false,
-  fields: {
-    username: '',
-    password: ''
-  }
+  username: '',
+  password: '',
+  loading: false
 };
 
 const loginReducer = handleActions({
-  update: (state, action) => {
-    const fieldUpdate = action.payload.updatedField;
-    const updatedFields = {
-      ...state.fields,
-      [fieldUpdate.name]: fieldUpdate.value
-    };
-    return {
-      ...state,
-      fields: updatedFields,
-      errors: [],
-      valid: true,
-      message: ''
-    }
-  },
   submit_login: (state, action) => ({
       ...state,
       authenticated: true,
-      fields: action.payload.updatedFields
+      username: action.username,
+      password: action.password,
+      loading: true
   }),
   logout: (state) => ({
       ...state,
       authenticated: false,
-      fields: {
-        username: '',
-        password: ''
-      }
+      username: '',
+      password: '',
+      loading: false
   }),
   cancel_login: (state) => ({
       ...state,
       authenticated: false,
-      fields: {
-        username: '',
-        password: ''
-      }
+      username: '',
+      password: '',
+      loading: false
   })
 }, INITIAL_STATE);
 

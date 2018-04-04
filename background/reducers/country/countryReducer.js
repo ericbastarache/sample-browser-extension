@@ -1,17 +1,18 @@
-import { countryKey, FETCH_COUNTRY_DATA, CHANGE_COUNTRY } from './actions.js';
+import * as reduxActions from 'redux-actions';
+import { key, FETCH_COUNTRY_DATA, CHANGE_COUNTRY } from './actions.js';
 
-const { createStore } = window.Redux;
+const { createStore } = reduxActions;
 const {
   createActions,
   handleActions,
   handleAction
-} = window.ReduxActions;
+} = reduxActions;
 
 const { fetch_country_data, change_country } = createActions(FETCH_COUNTRY_DATA, CHANGE_COUNTRY);
 
 export const selectors = {
-  countries: state => state[countryKey].countries,
-  country: state => state[countryKey].country
+  countries: state => state.countries,
+  country: state => state.country
 };
 
 const INITIAL_STATE = {

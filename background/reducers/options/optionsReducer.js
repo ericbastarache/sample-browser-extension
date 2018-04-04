@@ -1,13 +1,19 @@
-import { SELECT_OPTION, FETCH_OPTIONS } from './actions.js';
+import * as reduxActions from 'redux-actions';
+import { FETCH_OPTIONS } from './actions.js';
 
-const { createStore } = window.Redux;
+const { createStore } = reduxActions;
 const {
   createActions,
   handleActions,
   handleAction
-} = window.ReduxActions;
+} = reduxActions;
 
-const { select_option, fetch_options } = createActions(SELECT_OPTION, FETCH_OPTIONS);
+export const selectors = {
+  options: state => state.options,
+  option: state => state.option
+}
+
+const { fetch_options } = createActions(FETCH_OPTIONS);
 
 const INITIAL_STATE = {
   options: [],
@@ -18,10 +24,6 @@ const optionsReducer = handleActions({
   fetch_options:(state, action) => ({
       ...state,
       options: action.payload.options
-  }),
-  select_option: (state, action) => ({
-      ...state,
-      option: action.payload.selectedOption
   })
 }, INITIAL_STATE);
 
