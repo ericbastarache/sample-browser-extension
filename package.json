@@ -19,7 +19,7 @@
   "author": "Bernardo Garciarivas",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "core-js": "^2.4.1",
     "react": "^15.3.2",
     "react-chrome-redux": "0.0.8",
